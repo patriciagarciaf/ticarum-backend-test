@@ -29,7 +29,7 @@ import lombok.Setter;
 public @NoArgsConstructor @AllArgsConstructor @Getter @Setter class Invoice extends EntityBase {
 
     @NotBlank
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private String NIF;
 
     @NotNull
@@ -50,7 +50,15 @@ public @NoArgsConstructor @AllArgsConstructor @Getter @Setter class Invoice exte
 
     @ManyToMany
     @JoinTable(name = "invoiceProduct", joinColumns = @JoinColumn(name = "product_id"), inverseJoinColumns = @JoinColumn(name = "invoice_id"))
-    private final Set<Product> products = new HashSet<Product>();
+    private Set<Product> products = new HashSet<Product>();
+
+    @NotBlank
+    @Column(nullable = false)
+    private boolean isLocked=false;
+
+    public boolean getLocked(){
+        return isLocked;
+    }
 
     public void addProduct(Product product) {
         this.products.add(product);

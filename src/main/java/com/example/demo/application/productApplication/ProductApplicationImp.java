@@ -9,7 +9,6 @@ import com.example.demo.domain.productDomain.ProductProjection;
 import com.example.demo.infraestructure.productInfraestructure.ProductReadRepository;
 
 import org.modelmapper.ModelMapper;
-import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,18 +17,15 @@ public class ProductApplicationImp extends ApplicationBase<Product, UUID> implem
 
     private final ProductReadRepository productReadRepository;
     private final ModelMapper modelMapper;
-    private final Logger logger;
 
     @Autowired
     public ProductApplicationImp(
-            final ProductReadRepository productReadRepository, final ModelMapper modelMapper,
-            final Logger logger) {
+            final ProductReadRepository productReadRepository, final ModelMapper modelMapper) {
 
         super((id) -> productReadRepository.findById(id));
 
         this.productReadRepository = productReadRepository;
         this.modelMapper = modelMapper;
-        this.logger = logger;
     }
 
     @Override

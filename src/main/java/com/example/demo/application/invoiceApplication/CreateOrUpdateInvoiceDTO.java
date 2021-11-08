@@ -5,7 +5,6 @@ import java.util.UUID;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 
 import org.springframework.validation.annotation.Validated;
 
@@ -16,11 +15,11 @@ import lombok.Setter;
 public @Getter @Setter class CreateOrUpdateInvoiceDTO {
 
     @NotBlank
-    public String name;
-
-    @NotNull
-    public UUID image;
+    public String NIF;
 
     @NotEmpty
     public Set<UUID> products;
+
+    @NotEmpty
+    public int numberOfProducts;
 }

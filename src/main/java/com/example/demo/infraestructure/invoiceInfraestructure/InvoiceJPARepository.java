@@ -14,6 +14,8 @@ public interface InvoiceJPARepository extends JpaRepository<Invoice, UUID> {
 
   Invoice findByName(@Param("nif") String NIF);
 
+  // long count();
+
   @Query("SELECT CASE WHEN COUNT(i)>0 THEN true ELSE false END FROM invoice i WHERE i.nif = :nif")
     boolean exists(@Param("nif") String NIF);
 

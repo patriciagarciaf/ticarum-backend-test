@@ -38,8 +38,9 @@ public class InvoiceRepositoryImp implements InvoiceWriteRepository, InvoiceRead
 
     @Override
     public void update(Invoice invoice) {
-        this.invoiceJPARepository.save(invoice);
-        
+        if(invoice.getLocked()==false){
+            this.invoiceJPARepository.save(invoice);
+        }
     }
 
     @Override
@@ -51,4 +52,18 @@ public class InvoiceRepositoryImp implements InvoiceWriteRepository, InvoiceRead
     public List<InvoiceProjection> getAll(String NIF, int page, int size) {
         return this.invoiceJPARepository.findByCriteria(NIF, PageRequest.of(page, size));
     }
+
+    @Override
+    public void consolidate(Invoice invoice) {
+        if(invoice.getLocked()==false){
+            invoice.setLocked(true);
+        }
+        this.invoiceJPARepository.save(invoice);
+    }
+
+    // @Override
+    // public void count() {
+    //     this.invoiceJPARepository.count()
+        
+    // }
 }

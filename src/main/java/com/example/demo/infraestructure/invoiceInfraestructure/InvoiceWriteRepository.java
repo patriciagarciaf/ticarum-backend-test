@@ -11,4 +11,6 @@ public interface InvoiceWriteRepository extends FindById<Invoice, UUID>, ExistsB
     public void add(Invoice invoice);
     public void update(Invoice invoice);
     public void delete(Invoice invoice);
+    // public void count();
+    public void consolidate(Invoice invoice);
 }

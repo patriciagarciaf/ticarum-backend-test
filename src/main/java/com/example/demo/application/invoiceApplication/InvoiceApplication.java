@@ -8,6 +8,7 @@ import com.example.demo.domain.invoiceDomain.InvoiceProjection;
 public interface InvoiceApplication {
     
     public InvoiceDTO add(CreateOrUpdateInvoiceDTO dto);
+    public void consolidate(UUID id);
     public InvoiceDTO get(UUID id);
     public InvoiceDTO update(UUID id, CreateOrUpdateInvoiceDTO dto);
     public void delete(UUID id);

@@ -4,14 +4,15 @@ import java.util.UUID;
 
 import javax.validation.Valid;
 
+import com.example.demo.application.invoiceApplication.InvoiceDTO;
 import com.example.demo.application.invoiceApplication.CreateOrUpdateInvoiceDTO;
 import com.example.demo.application.invoiceApplication.InvoiceApplication;
-import com.example.demo.application.invoiceApplication.InvoiceDTO;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -34,7 +35,6 @@ public class InvoiceController {
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> create(@Valid @RequestBody final CreateOrUpdateInvoiceDTO dto){
         InvoiceDTO invoiceDTO = this.invoiceApplication.add(dto);
-
         return ResponseEntity.status(201).body(invoiceDTO);
     }
 
@@ -48,5 +48,15 @@ public class InvoiceController {
     public ResponseEntity<?> get(@Valid @PathVariable UUID id) {
         InvoiceDTO invoiceDTO = this.invoiceApplication.get(id);
         return ResponseEntity.ok(invoiceDTO);
+    }
+
+    @PutMapping(path = "/{id}")
+    public void consolidate(@PathVariable UUID id) {
+        this.invoiceApplication.consolidate(id);
+    }
+
+    @DeleteMapping(path = "/{id}")
+    void delete(@PathVariable UUID id) {
+        this.invoiceApplication.delete(id);
     }
 }

@@ -5,21 +5,19 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
-import com.example.demo.domain.productDomain.Product;
-
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 public @Getter @Setter @NoArgsConstructor class InvoiceDTO {
-
-    private UUID id;
     
-    private String name;
+    private String NIF;
 
-    private UUID image;
+    private BigDecimal priceWithoutIVA;
 
-    private BigDecimal price;
+    private BigDecimal priceWithIVA;
 
-    private Set<Product> Ingredients = new HashSet<Product>();
+    private int numberOfProducts;
+
+    private Set<UUID> products = new HashSet<UUID>();
 }

@@ -12,7 +12,6 @@ import com.example.demo.infraestructure.invoiceInfraestructure.InvoiceReadReposi
 import com.example.demo.infraestructure.invoiceInfraestructure.InvoiceWriteRepository;
 
 import org.modelmapper.ModelMapper;
-import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,19 +22,17 @@ public class InvoiceApplicationImp extends ApplicationBase<Invoice, UUID> implem
     private final InvoiceReadRepository invoiceReadRepository;
     private final ProductApplicationImp productApplicationImp;
     private final ModelMapper modelMapper = new ModelMapper();
-    private final Logger logger;
 
     @Autowired
     public InvoiceApplicationImp(final InvoiceWriteRepository invoiceWriteRepository,
             final InvoiceReadRepository invoiceReadRepository,
-            final ProductApplicationImp productApplicationImp, final Logger logger) {
+            final ProductApplicationImp productApplicationImp) {
 
         super((id) -> invoiceWriteRepository.findById(id));
 
         this.invoiceWriteRepository = invoiceWriteRepository;
         this.invoiceReadRepository=invoiceReadRepository;
         this.productApplicationImp = productApplicationImp;
-        this.logger = logger;
     }
 
     @Override
@@ -44,22 +41,17 @@ public class InvoiceApplicationImp extends ApplicationBase<Invoice, UUID> implem
         Invoice invoice = this.modelMapper.map(dto, Invoice.class);
         invoice.setId(UUID.randomUUID());
         for (UUID productId : dto.getProducts()) {
-
             Product product = this.modelMapper.map(productApplicationImp.get(productId), Product.class);
             invoice.addProduct(product);
         }
         invoice.setPriceWithIVA(invoice.calculatePriceWithIVA());
         invoice.setPriceWithoutIVA(invoice.calculatePriceWithoutIVA());
-
         this.invoiceWriteRepository.add(invoice);
-        logger.info(this.serializeObject(invoice, "added"));
-
         return this.modelMapper.map(invoice, InvoiceDTO.class);
     }
 
     @Override
     public InvoiceDTO get(UUID id) {
-
         Invoice invoice = this.findById(id);
         return this.modelMapper.map(invoice, InvoiceDTO.class);
     }
@@ -67,11 +59,8 @@ public class InvoiceApplicationImp extends ApplicationBase<Invoice, UUID> implem
     @Override
     public InvoiceDTO update(UUID id, CreateOrUpdateInvoiceDTO dto) {
         Invoice invoice = this.findById(id);
-   
         this.modelMapper.map(dto, invoice);
         this.invoiceWriteRepository.update(invoice);
-        logger.info(this.serializeObject(invoice, "updated"));
-
         return this.modelMapper.map(invoice, InvoiceDTO.class);
     }
 
@@ -79,11 +68,15 @@ public class InvoiceApplicationImp extends ApplicationBase<Invoice, UUID> implem
     public void delete(UUID id) {
         Invoice invoice = this.findById(id);
         this.invoiceWriteRepository.delete(invoice);
-        logger.info(this.serializeObject(invoice, "deleted"));        
     }
 
     @Override
     public List<InvoiceProjection> getAll(String name, int page, int size) {
         return this.invoiceReadRepository.getAll(name, page, size);
+    }
+
+    public void consolidate(UUID id){
+        Invoice invoice = this.findById(id);
+        this.invoiceWriteRepository.consolidate(invoice);
     }
 }
