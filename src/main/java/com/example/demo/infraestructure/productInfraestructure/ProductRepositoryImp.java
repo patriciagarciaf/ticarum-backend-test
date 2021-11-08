@@ -6,7 +6,6 @@ import java.util.UUID;
 
 import com.example.demo.domain.productDomain.Product;
 import com.example.demo.domain.productDomain.ProductProjection;
-import com.example.demo.domain.productDomain.ProductReadRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -33,8 +32,4 @@ public class ProductRepositoryImp implements ProductReadRepository {
         PageRequest.of(page, size));
     }
 
-    @Override
-    public boolean exists(String id) {
-        return this.productJPARepository.exists(id);
-    }
 }
