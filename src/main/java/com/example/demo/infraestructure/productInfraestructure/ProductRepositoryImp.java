@@ -28,8 +28,8 @@ public class ProductRepositoryImp implements ProductReadRepository {
 
     @Override
     public List<ProductProjection> getAll(String id, int page, int size) {
-        return this.productJPARepository.findByCriteria(id,
-        PageRequest.of(page, size));
+        return this.productJPARepository.findByCriteria(id, PageRequest.of(page, size)
+        );
     }
 
 }

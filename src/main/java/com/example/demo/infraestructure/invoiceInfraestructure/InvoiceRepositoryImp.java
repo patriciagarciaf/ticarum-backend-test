@@ -32,11 +32,6 @@ public class InvoiceRepositoryImp implements InvoiceWriteRepository, InvoiceRead
     }
 
     @Override
-    public boolean exists(String NIF) {
-        return this.invoiceJPARepository.exists(NIF);
-    }
-
-    @Override
     public void update(Invoice invoice) {
         if(invoice.getLocked()==false){
             this.invoiceJPARepository.save(invoice);
@@ -60,10 +55,4 @@ public class InvoiceRepositoryImp implements InvoiceWriteRepository, InvoiceRead
         }
         this.invoiceJPARepository.save(invoice);
     }
-
-    // @Override
-    // public void count() {
-    //     this.invoiceJPARepository.count()
-        
-    // }
 }

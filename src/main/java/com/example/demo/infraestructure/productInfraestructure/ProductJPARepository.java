@@ -13,9 +13,6 @@ import org.springframework.data.repository.query.Param;
 
 public interface ProductJPARepository extends JpaRepository<Product, UUID>{
 
-    @Query("SELECT p.id as id, p.description as description, p.priceWithoutIVA as priceWithoutIVA FROM Products p WHERE (:id is NULL OR id LIKE %:id%)")
+    @Query("SELECT products.id FROM product p WHERE (:id is NULL OR id LIKE %:id%)")
     List<ProductProjection> findByCriteria(@Param("id") String id, Pageable pageable);
-
-    @Query("SELECT CASE WHEN COUNT(i)>0 THEN true ELSE false END FROM products p WHERE p.id = :id")
-    boolean exists(@Param("id") String id);
 }

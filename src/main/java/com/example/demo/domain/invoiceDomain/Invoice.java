@@ -44,13 +44,13 @@ public @NoArgsConstructor @AllArgsConstructor @Getter @Setter class Invoice exte
     @Column(nullable = false, precision = 3, scale = 2)
     private BigDecimal priceWithIVA;
 
-    @NotNull
-    @Column(nullable = false)
-    private int numberOfProducts;
-
     @ManyToMany
     @JoinTable(name = "invoiceProduct", joinColumns = @JoinColumn(name = "product_id"), inverseJoinColumns = @JoinColumn(name = "invoice_id"))
     private Set<Product> products = new HashSet<Product>();
+
+    @NotNull
+    @Column(nullable = false)
+    private int numberOfProducts= products.size();
 
     @NotBlank
     @Column(nullable = false)

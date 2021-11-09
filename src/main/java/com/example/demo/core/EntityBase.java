@@ -6,8 +6,6 @@ import javax.persistence.Column;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 
-import com.example.demo.core.functionalInterfaces.ExistsByField;
-
 import org.hibernate.annotations.Type;
 import org.springframework.validation.annotation.Validated;
 
@@ -41,7 +39,7 @@ public @Getter @Setter abstract class EntityBase {
         // }
     }
 
-    public void validate(String key, String value, ExistsByField existsByField){
+    public void validate(String key, String value){
         
         // this.validate();
         // if(existsByField.exists(value)){
